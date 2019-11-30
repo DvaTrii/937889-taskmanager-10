@@ -21,7 +21,7 @@ const Tags = [
   `theory`,
   `practice`,
   `intensive`,
-  `keks`
+  `repeat`
 ];
 
 const getRandomArrayItem = (array) => {
@@ -47,6 +47,7 @@ const getRandomDate = () => {
 const generateRepeatingDays = () => {
   return Object.assign({}, DefaultRepeatingDays, {
     'mo': Math.random() > 0.5,
+    'tu': Math.random() > 0.5,
   });
 };
 
