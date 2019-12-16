@@ -10,4 +10,3 @@ export const formatTime = (date) => {
 
   return `${hours}:${minutes} ${interval}`;
 };
-

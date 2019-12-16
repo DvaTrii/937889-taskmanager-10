@@ -3,10 +3,10 @@ import {createFilterTemplate} from './components/filter.js';
 import {createBoardTemplate} from './components/board.js';
 import {createTaskTemplate} from './components/task.js';
 import {createTaskEditTemplate} from './components/task-edit.js';
-import {createTaskAddTemplate} from './components/task-add.js';
+import {generateFilters} from './mock/filter.js';
 import {createLoadMoreButtonTemplate} from './components/load-more-button.js';
 
-const TASK_COUNT = 2;
+const TASK_COUNT = 3;
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -15,11 +15,11 @@ const render = (container, template, place = `beforeend`) => {
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 render(siteHeaderElement, createSiteMenuTemplate());
-render(siteMainElement, createFilterTemplate());
+const filters = generateFilters();
+render(siteMainElement, createFilterTemplate(filters), `beforeend`);
 render(siteMainElement, createBoardTemplate());
 
 const taskListElement = document.querySelector(`.board__tasks`);
-render(taskListElement, createTaskAddTemplate());
 render(taskListElement, createTaskEditTemplate());
 
 new Array(TASK_COUNT)
