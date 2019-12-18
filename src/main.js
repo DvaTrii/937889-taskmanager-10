@@ -24,7 +24,6 @@ render(siteMainElement, createFilterTemplate(filters));
 render(siteMainElement, createBoardTemplate());
 
 const taskListElement = document.querySelector(`.board__tasks`);
-render(taskListElement, createTaskEditTemplate());
 const tasks = generateTasks(TASK_COUNT);
 
 render(taskListElement, createTaskEditTemplate(tasks[0]));
