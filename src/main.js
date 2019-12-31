@@ -12,6 +12,24 @@ const TASK_COUNT = 20;
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 
+const renderTask = (task) => {
+  const taskComponent = new TaskComponent(task);
+  const taskEditComponent = new TaskEditComponent(task);
+
+  const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
+  editButton.addEventListener(`click`, () => {
+    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+  });
+
+  const editForm = taskEditComponent.getElement().querySelector(`form`);
+  editForm.addEventListener(`submit`, () => {
+    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+  });
+
+  render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
+
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
@@ -27,12 +45,12 @@ const taskListElement = boardComponent.getElement().querySelector(`.board__tasks
 
 const tasks = generateTasks(TASK_COUNT);
 
-render(taskListElement, new TaskEditComponent(tasks[0]).getElement(), RenderPosition.BEFOREEND);
-
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-tasks.slice(1, showingTasksCount)
-  .forEach((task) => render(taskListElement, new TaskComponent(task).getElement(), RenderPosition.BEFOREEND));
+tasks.slice(0, showingTasksCount)
+  .forEach((task) => {
+    renderTask(task);
+  });
 
 const loadMoreButtonComponent = new LoadMoreButtonComponent();
 render(boardComponent.getElement(), loadMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
@@ -42,7 +60,7 @@ loadMoreButtonComponent.getElement().addEventListener(`click`, () => {
   showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
   tasks.slice(prevTasksCount, showingTasksCount)
-    .forEach((task) => render(taskListElement, new TaskComponent(task).getElement(), RenderPosition.BEFOREEND));
+    .forEach((task) => renderTask(task));
 
   if (showingTasksCount >= tasks.length) {
     loadMoreButtonComponent.getElement().remove();
