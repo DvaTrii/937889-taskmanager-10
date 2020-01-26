@@ -1,6 +1,6 @@
-import flatpickr from 'flatpickr';
-import "flatpickr/dist/flatpickr.min.css";
-import "flatpickr/dist/themes/light.css";
+// import flatpickr from 'flatpickr';
+// import "flatpickr/dist/flatpickr.min.css";
+// import "flatpickr/dist/themes/light.css";
 
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {COLORS, DAYS} from '../const.js';
@@ -241,7 +241,7 @@ export default class TaskEdit extends AbstractSmartComponent {
 
     if (this._isDateShowing) {
       const dateElement = this.getElement().querySelector(`.card__date`);
-      this._flatpickr = flatpickr(dateElement, {
+      this._flatpickr = window.flatpickr(dateElement, {
         altInput: true,
         allowInput: true,
         defaultDate: this._task.dueDate,
