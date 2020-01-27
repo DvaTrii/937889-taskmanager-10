@@ -1,6 +1,6 @@
 import TaskComponent from '../components/task.js';
 import TaskEditComponent from '../components/task-edit.js';
-import {render, replace, RenderPosition} from '../utils/render.js';
+import {COLOR} from '../const.js';
 
 const Mode = {
   DEFAULT: `default`,
