@@ -10,4 +10,16 @@ export default class Tasks {
   setTasks(tasks) {
     this._tasks = Array.from(tasks);
   }
+
+  updateTask(id, task) {
+    const index = this._tasks.findIndex((it) => it.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    this._tasks = [].concat(this._tasks.slice(0, index), task, this._tasks.slice(index + 1));
+
+    return true;
+  }
 }
