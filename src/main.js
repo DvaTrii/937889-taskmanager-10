@@ -10,8 +10,18 @@ const TASK_COUNT = 20;
 
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
+const siteMenuComponent = new SiteMenuComponent();
 
-render(siteHeaderElement, new SiteMenuComponent(), RenderPosition.BEFOREEND);
+// Быстрое решение для подписки на клик по кнопке.
+// Это противоречит нашей архитектуре работы с DOM-элементами, но это временное решение.
+// Совсем скоро мы создадим полноценный компонент для работы с меню.
+siteMenuComponent.getElement().querySelector(`.control__label--new-task`)
+  .addEventListener(`click`, () => {
+    boardController.createTask();
+  });
+
+render(siteHeaderElement, siteMenuComponent, RenderPosition.BEFOREEND);
+
 const tasks = generateTasks(TASK_COUNT);
 const tasksModel = new TasksModel();
 tasksModel.setTasks(tasks);
