@@ -6,13 +6,7 @@ export const COLOR = {
   PINK: `pink`,
 };
 
-export const COLORS = [
-  COLOR.BLACK,
-  COLOR.YELLOW,
-  COLOR.BLUE,
-  COLOR.GREEN,
-  COLOR.PINK
-];
+export const COLORS = Object.values(COLOR);
 
 export const DAYS = [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`];
 

@@ -32,9 +32,7 @@ export default class TaskController {
     this._container = container;
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
-
     this._mode = Mode.DEFAULT;
-
     this._taskComponent = null;
     this._taskEditComponent = null;
 
@@ -130,6 +128,7 @@ export default class TaskController {
         this._onDataChange(this, EmptyTask, null);
       }
       this._replaceEditToTask();
+      document.removeEventListener(`keydown`, this._onEscKeyDown);
     }
   }
 }

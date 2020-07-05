@@ -21,12 +21,14 @@ export default class Tasks {
 
   setTasks(tasks) {
     this._tasks = Array.from(tasks);
+    this._callHandlers(this._dataChangeHandlers);
   }
 
   setFilter(filterType) {
     this._activeFilterType = filterType;
     this._callHandlers(this._filterChangeHandlers);
   }
+
   removeTask(id) {
     const index = this._tasks.findIndex((it) => it.id === id);
 

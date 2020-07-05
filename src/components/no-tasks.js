@@ -1,4 +1,5 @@
 import AbstractComponent from "./abstract-component.js";
+
 const createNoTasksTemplate = () => {
   return (
     `<p class="board__no-tasks">

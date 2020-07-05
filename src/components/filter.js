@@ -26,11 +26,9 @@ const createFilterMarkup = (filter, isChecked) => {
 const createFilterTemplate = (filters) => {
   const filtersMarkup = filters.map((it) => createFilterMarkup(it, it.checked)).join(`\n`);
 
-  return (
-    `<section class="main__filter filter container">
+  return `<section class="main__filter filter container">
       ${filtersMarkup}
-     </section>`
-  );
+     </section>`;
 };
 
 export default class Filter extends AbstractComponent {

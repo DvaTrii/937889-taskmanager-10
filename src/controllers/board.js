@@ -2,8 +2,8 @@ import LoadMoreButtonComponent from '../components/load-more-button.js';
 import TasksComponent from '../components/tasks.js';
 import SortComponent, {SortType} from '../components/sort.js';
 import NoTasksComponent from '../components/no-tasks.js';
-import {render, remove, RenderPosition} from '../utils/render.js';
 import TaskController, {Mode as TaskControllerMode, EmptyTask} from './task.js';
+import {render, remove, RenderPosition} from '../utils/render.js';
 
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
@@ -15,6 +15,25 @@ const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
 
     return taskController;
   });
+};
+
+const getSortedTasks = (tasks, sortType, from, to) => {
+  let sortedTasks = [];
+  const showingTasks = tasks.slice();
+
+  switch (sortType) {
+    case SortType.DATE_UP:
+      sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+      break;
+    case SortType.DATE_DOWN:
+      sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+      break;
+    case SortType.DEFAULT:
+      sortedTasks = showingTasks;
+      break;
+  }
+
+  return sortedTasks.slice(from, to);
 };
 
 export default class BoardController {
@@ -132,29 +151,14 @@ export default class BoardController {
   }
 
   _onSortTypeChange(sortType) {
-    let sortedTasks = [];
-    const tasks = this._tasksModel.getTasks();
+    this._showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
-    switch (sortType) {
-      case SortType.DATE_UP:
-        sortedTasks = tasks.slice().sort((a, b) => a.dueDate - b.dueDate);
-        break;
-      case SortType.DATE_DOWN:
-        sortedTasks = tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
-        break;
-      case SortType.DEFAULT:
-        sortedTasks = tasks.slice(0, this._showingTasksCount);
-        break;
-    }
+    const sortedTasks = getSortedTasks(this._tasksModel.getTasks(), sortType, 0, this._showingTasksCount);
 
     this._removeTasks();
     this._renderTasks(sortedTasks);
 
-    if (sortType === SortType.DEFAULT) {
-      this._renderLoadMoreButton();
-    } else {
-      remove(this._loadMoreButtonComponent);
-    }
+    this._renderLoadMoreButton();
   }
 
   _onLoadMoreButtonClick() {
