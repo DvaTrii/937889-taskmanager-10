@@ -1,7 +1,7 @@
 import AbstractSmartComponent from "./abstract-smart-component.js";
 
 const creatStatisticsTemplate = () => {
-  return `<h2>It works</h2>>`;
+  return `<div>Statistics</div>`;
 };
 
 export default class Statistics extends AbstractSmartComponent {
