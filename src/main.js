@@ -7,6 +7,8 @@ import SiteMenuComponent, {MenuItem} from './components/site-menu.js';
 import TasksModel from './models/tasks.js';
 import {render, RenderPosition} from "./utils/render.js";
 
+const AUTHORIZATION = `Basic dXNcharRRRBwYXNzd29yZAo=`;
+
 const dateTo = new Date();
 const dateFrom = (() => {
   const d = new Date(dateTo);
@@ -14,7 +16,7 @@ const dateFrom = (() => {
   return d;
 })();
 
-const api = new API();
+const api = new API(AUTHORIZATION);
 
 const tasksModel = new TasksModel();
 
