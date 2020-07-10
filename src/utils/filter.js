@@ -30,10 +30,6 @@ export const getRepeatingTasks = (tasks) => {
   return tasks.filter((task) => isRepeating(task.repeatingDays));
 };
 
-export const getTasksWithHashtags = (tasks) => {
-  return tasks.filter((task) => task.tags.size);
-};
-
 export const getTasksInOneDay = (tasks, date) => {
   return tasks.filter((task) => isOneDay(task.dueDate, date));
 };
@@ -52,8 +48,6 @@ export const getTasksByFilter = (tasks, filterType) => {
       return getOverdueTasks(getNotArchiveTasks(tasks), nowDate);
     case FilterType.REPEATING:
       return getRepeatingTasks(getNotArchiveTasks(tasks));
-    case FilterType.TAGS:
-      return getTasksWithHashtags(getNotArchiveTasks(tasks));
     case FilterType.TODAY:
       return getTasksInOneDay(getNotArchiveTasks(tasks), nowDate);
   }

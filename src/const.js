@@ -31,6 +31,5 @@ export const FilterType = {
   FAVORITES: `favorites`,
   OVERDUE: `overdue`,
   REPEATING: `repeating`,
-  TAGS: `tags`,
   TODAY: `today`,
 };

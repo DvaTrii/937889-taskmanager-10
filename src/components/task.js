@@ -2,21 +2,6 @@ import AbstractComponent from './abstract-component.js';
 import {formatTime, formatDate, isOverdueDate} from '../utils/common.js';
 import {encode} from "he";
 
-
-const createHashtagsMarkup = (hashtags) => {
-  return hashtags
-    .map((hashtag) => {
-      return (
-        `<span class="card__hashtag-inner">
-            <span class="card__hashtag-name">
-              #${hashtag}
-            </span>
-          </span>`
-      );
-    })
-    .join(`\n`);
-};
-
 const createButtonMarkup = (name, isActive) => {
   return (
     `<button
@@ -31,7 +16,8 @@ const createButtonMarkup = (name, isActive) => {
 const createTaskTemplate = (task) => {
   // Все работу производим заранее. Внутри шаблонной строки никаких вычислений не делаем,
   // потому что внутри большой разметки сложно искать какой-либо код.
-  const {description: notSanitizedDescription, tags, dueDate, color, repeatingDays} = task;
+  const {description: notSanitizedDescription, dueDate, color, repeatingDays} = task;
+
 
   const isExpired = dueDate instanceof Date && isOverdueDate(dueDate, new Date());
   const isDateShowing = !!dueDate;
@@ -40,7 +26,6 @@ const createTaskTemplate = (task) => {
   const time = isDateShowing ? formatTime(dueDate) : ``;
   const description = encode(notSanitizedDescription);
 
-  const hashtags = createHashtagsMarkup(Array.from(tags));
   const editButton = createButtonMarkup(`edit`, true);
   const archiveButton = createButtonMarkup(`archive`, task.isArchive);
   const favoritesButton = createButtonMarkup(`favorites`, task.isFavorite);
@@ -73,11 +58,6 @@ const createTaskTemplate = (task) => {
                     <span class="card__date">${date}</span>
                     <span class="card__time">${time}</span>
                   </p>
-                </div>
-              </div>
-              <div class="card__hashtag">
-                <div class="card__hashtag-list">
-                  ${hashtags}
                 </div>
               </div>
             </div>
