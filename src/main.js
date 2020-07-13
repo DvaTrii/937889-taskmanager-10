@@ -1,4 +1,5 @@
 import API from "./api/index.js";
+import Provider from "./api/provider.js";
 import BoardComponent from './components/board.js';
 import StatisticsComponent from "./components/statistics.js";
 import BoardController from "./controllers/board";
@@ -18,6 +19,7 @@ const dateFrom = (() => {
 })();
 
 const api = new API(END_POINT, AUTHORIZATION);
+const apiWithProvider = new Provider(api);
 
 const tasksModel = new TasksModel();
 
@@ -27,7 +29,7 @@ const siteMenuComponent = new SiteMenuComponent();
 const statisticsComponent = new StatisticsComponent({tasks: tasksModel, dateFrom, dateTo});
 
 const boardComponent = new BoardComponent();
-const boardController = new BoardController(boardComponent, tasksModel, api);
+const boardController = new BoardController(boardComponent, tasksModel, apiWithProvider);
 const filterController = new FilterController(siteMainElement, tasksModel);
 
 
@@ -54,7 +56,7 @@ siteMenuComponent.setOnChange((menuItem) => {
   }
 });
 
-api.getTasks()
+apiWithProvider.getTasks()
   .then((tasks) => {
     tasksModel.setTasks(tasks);
     boardController.render();
