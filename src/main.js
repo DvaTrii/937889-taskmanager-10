@@ -1,5 +1,6 @@
 import API from "./api/index.js";
 import Provider from "./api/provider.js";
+import Store from "./api/store.js";
 import BoardComponent from './components/board.js';
 import StatisticsComponent from "./components/statistics.js";
 import BoardController from "./controllers/board";
@@ -19,7 +20,8 @@ const dateFrom = (() => {
 })();
 
 const api = new API(END_POINT, AUTHORIZATION);
-const apiWithProvider = new Provider(api);
+const store = new Store();
+const apiWithProvider = new Provider(api, store);
 
 const tasksModel = new TasksModel();
 
