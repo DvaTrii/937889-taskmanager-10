@@ -19,9 +19,9 @@ export default class Provider {
           return tasks;
         });
     }
-    // TODO: Реализовать логику при отсутствии интернета
+
     const storeTasks = Object.values(this._store.getItems());
-    return Promise.reject(`offline logic is not implemented`);
+    return Promise.resolve(Task.parseTasks(storeTasks));
   }
 
   createTask(task) {
