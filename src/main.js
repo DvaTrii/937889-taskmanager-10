@@ -1,4 +1,4 @@
-import API from "./api.js";
+import API from "./api/index.js";
 import BoardComponent from './components/board.js';
 import StatisticsComponent from "./components/statistics.js";
 import BoardController from "./controllers/board";
