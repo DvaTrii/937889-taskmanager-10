@@ -1,4 +1,4 @@
-import Task from "./models/task.js";
+import Task from "../models/task.js";
 
 const Method = {
   GET: `GET`,
@@ -15,7 +15,7 @@ const checkStatus = (response) => {
   }
 };
 
-const API = class {
+const Api = class {
   constructor(endPoint, authorization) {
     this._endPoint = endPoint;
     this._authorization = authorization;
@@ -53,7 +53,18 @@ const API = class {
     return this._load({url: `tasks/${id}`, method: Method.DELETE});
   }
 
+  sync(data) {
+    return this._load({
+      url: `tasks/sync`,
+      method: Method.POST,
+      body: JSON.stringify(data),
+      headers: new Headers({"Content-Type": `application/json`})
+    })
+      .then((response) => response.json());
+  }
+
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
+
     headers.append(`Authorization`, this._authorization);
 
     return fetch(`${this._endPoint}/${url}`, {method, body, headers})
@@ -64,4 +75,4 @@ const API = class {
   }
 };
 
-export default API;
+export default Api;
