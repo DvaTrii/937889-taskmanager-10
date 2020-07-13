@@ -35,11 +35,18 @@ export default class Provider {
 
   updateTask(id, task) {
     if (isOnline()) {
-      return this._api.updateTask(id, task);
-    }
-    // TODO: Реализовать логику при отсутствии интернета
+      return this._api.updateTask(id, task)
+        .then((newTask) => {
+          this._store.setItem(newTask.id, newTask.toRAW());
 
-    return Promise.reject(`offline logic is not implemented`);
+          return newTask;
+        });
+    }
+
+    const localTask = Task.clone(Object.assign(task, {id}));
+    this._store.setItem(id, localTask.toRAW());
+
+    return Promise.resolve(localTask);
   }
 
   deleteTask(id) {
